@@ -117,7 +117,7 @@ class google_sheets():
         except HttpError as error:
             __errors__(error, type='HttpError')
 
-    def formatting (self, ranges='Sheet!A1:B2', backgroundColor='white', fontColor='white', type=''):
+    def formatting (self, ranges='Sheet!A1:B2', backgroundColor='white', fontColor='white', type='Your formula'):
         color_list = {"red": {'red': 1, 'green': 0.0, 'blue': 0.0},
                       "green": {'red': 0.0, 'green': 1, 'blue': 0.0},
                       "blue": {'red': 0.0, 'green': 0.0, 'blue': 1},
@@ -164,10 +164,11 @@ class google_sheets():
         else:
             sys.exit("Enter your range: ranges='Sheet!A1:B2'")
 
-        if type != '':
+        if type != 'Your formula':
             pass
         else:
-            sys.exit("Enter your formatting type: type=''")
+            sys.exit("Enter your formatting type: type='Your formula'")
+
 
         try:
             sheet_id = self.info(sheet=ranges.split("!")[0])['properties']['sheetId']
@@ -187,9 +188,9 @@ class google_sheets():
                             }],
                             'booleanRule': {
                                 'condition': {
-                                    'type': 'TEXT_EQ',
+                                    'type': "CUSTOM_FORMULA",
                                     'values': [{
-                                        'userEnteredValue': 'hello'
+                                        'userEnteredValue': type
                                     }]
                                 },
                                 'format': {
